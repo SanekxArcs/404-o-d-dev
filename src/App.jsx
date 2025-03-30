@@ -95,7 +95,7 @@ function App() {
   }, [searchTerm, domains]);
 
   return (
-    <div className="flex overflow-hidden flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 p-2">
+    <div className="flex overflow-hidden flex-col items-center justify-center min-h-[100svh] max-h-[100dvh] bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 p-2">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
         <div className="absolute w-full h-full">
           {[...Array(50)].map((_, i) => (
