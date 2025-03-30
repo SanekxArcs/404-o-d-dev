@@ -1,0 +1,31 @@
+{
+    "domains": [
+        { "name": "activebox-t-task", "url": "https://activebox-t-task.o-d.dev", "pinned": false },
+        { "name": "www", "url": "https://www.o-d.dev", "pinned": false },
+        { "name": "vdg-erm", "url": "https://vdg-erm.o-d.dev", "pinned": false }, 
+        { "name": "tunerfest", "url": "https://tunerfest.o-d.dev", "pinned": false },
+        { "name": "tip-calc", "url": "https://tip-calc.o-d.dev", "pinned": false },
+        { "name": "think1sz", "url": "https://think1sz.o-d.dev", "pinned": false },
+        { "name": "sushi-shop", "url": "https://sushi-shop.o-d.dev", "pinned": false },
+        { "name": "startupz-t-task", "url": "https://startupz-t-task.o-d.dev", "pinned": false },
+        { "name": "solarsense", "url": "https://solarsense.o-d.dev", "pinned": false },
+        { "name": "skethup-portfolio", "url": "https://skethup-portfolio.o-d.dev", "pinned": false }, 
+        { "name": "resume", "url": "https://resume.o-d.dev", "pinned": false },
+        { "name": "qr-code", "url": "https://qr-code.o-d.dev", "pinned": false },
+        { "name": "product-test-task", "url": "https://product-test-task.o-d.dev", "pinned": false },
+        { "name": "pas-gen", "url": "https://pas-gen.o-d.dev", "pinned": false },
+        { "name": "omnifood", "url": "https://omnifood.o-d.dev", "pinned": false },
+        { "name": "love", "url": "https://love.o-d.dev", "pinned": false },
+        { "name": "book-list", "url": "https://book-list.o-d.dev", "pinned": false },
+        { "name": "contact-me-dev", "url": "https://contact-me-dev.o-d.dev", "pinned": false }, 
+        { "name": "contact-me", "url": "https://contact-me.o-d.dev", "pinned": false }, 
+        { "name": "cv / resume", "url": "https://cv.o-d.dev", "pinned": true }, 
+        { "name": "feiginelectric", "url": "https://feiginelectric.o-d.dev", "pinned": false },
+        { "name": "forms-t-task", "url": "https://forms-t-task.o-d.dev", "pinned": false },
+        { "name": "liberty-immigration", "url": "https://liberty-immigration.o-d.dev", "pinned": false },
+        { "name": "merx-t-task", "url": "https://merx-t-task.o-d.dev", "pinned": false },
+        { "name": "motorfest-pro-settings", "url": "https://motorfest-pro-settings.o-d.dev", "pinned": false }, 
+        { "name": "movies", "url": "https://movies.o-d.dev", "pinned": false },
+        { "name": "moyo-test-task", "url": "https://moyo-test-task.o-d.dev", "pinned": false }
+    ]
+}

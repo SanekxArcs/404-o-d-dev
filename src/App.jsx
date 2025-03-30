@@ -8,25 +8,53 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Terminal, Server, RefreshCw, ExternalLink, Info } from "lucide-react";
+import { 
+  Terminal, 
+  Server, 
+  RefreshCw, 
+  ExternalLink, 
+  Info,
+  Globe,
+  ExternalLinkIcon,
+  PinIcon,
+  Search
+} from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+// Import data from JSON files
+import domainData from "./data/domains.json";
+import { funFacts } from "./data/funFacts.json";
+import { messages } from "./data/loadingMessages.json";
 
 function App() {
   const [progress, setProgress] = useState(0);
   const [loadingText, setLoadingText] = useState("Searching for page...");
   const [funFact, setFunFact] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  
 
-  const funFacts = [
-    "The 404 error code comes from room 404 at CERN where the World Wide Web was developed, which was the room where the site index was stored.",
-    "In the early days of the web, 404 errors were so common that the Error 404 page was often the most-viewed page on many websites.",
-    "Some websites have turned their 404 pages into games, like Google's T-Rex dinosaur game that appears when Chrome can't connect to the internet.",
-    "The HTTP 1.0 specification (from 1996) lists only 16 status codes, while the modern HTTP standard has over 60 different status codes.",
-    "A '418 I'm a Teapot' status code actually exists as an April Fools' joke from 1998, indicating that the server refuses to brew coffee because it's a teapot.",
-    "The first web server in the United States was set up at Stanford University in December 1990, less than a year after the web was invented.",
-    "Many people consider a well-designed 404 page as a mark of a company that cares about user experience.",
-    "The most common cause of 404 errors is moving or renaming pages without setting up proper redirects.",
-    "Unlike 404 (Not Found), a 410 status code means 'Gone' – the resource has been intentionally removed and won't be coming back.",
-    "The global internet handles approximately 22 billion HTTP requests per second, and a small percentage of those result in 404 errors.",
-  ];
+  const [domains] = useState(() => {
+
+    const sortedDomains = [...domainData.domains].sort((a, b) => {
+
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+
+      return a.name.localeCompare(b.name);
+    });
+    
+    return sortedDomains;
+  });
+  
+  const [filteredDomains, setFilteredDomains] = useState(domains);
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * funFacts.length);
@@ -47,23 +75,24 @@ function App() {
     return () => clearTimeout(timer);
   }, [progress]);
 
-  const messages = [
-    "Checking alternate dimensions",
-    "Asking AI if it knows",
-    "Looking behind the couch",
-    "Searching in /dev/null",
-    "Consulting the documentation",
-    "Reversing polarity",
-    "Blaming the intern",
-  ];
-
   useEffect(() => {
     if (progress > 0 && progress < 100 && progress % 15 === 0) {
       setLoadingText(messages[Math.floor(progress / 15) % messages.length]);
     }
   }, [progress]);
 
-
+  // Handle search in the domains dialog
+  useEffect(() => {
+    if (searchTerm) {
+      setFilteredDomains(
+        domains.filter(domain => 
+          domain.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredDomains(domains);
+    }
+  }, [searchTerm, domains]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 p-2">
@@ -169,57 +198,126 @@ function App() {
             <p className="text-xs text-slate-500">
               &copy; {new Date().getFullYear()} o-d.dev
             </p>
-            <a
-              href="https://o-d.dev"
-              className="text-xs text-sky-400 flex items-center gap-1 hover:underline"
-            >
-              Go to homepage <ExternalLink className="h-3 w-3" />
-            </a>
+            <div className="flex items-center gap-3">
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <button className="text-xs text-purple-400 flex items-center gap-1 hover:underline">
+                    <Globe className="h-3 w-3" />
+                    All sites
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-hidden flex flex-col bg-black/80 backdrop-blur-xl border-slate-800">
+                  <DialogHeader>
+                    <DialogTitle className="text-sky-400 flex items-center gap-2">
+                      <Globe className="h-5 w-5" />
+                      Available o-d.dev Sites
+                    </DialogTitle>
+                    <DialogDescription>
+                      Browse all available subdomains on o-d.dev
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  <div className="relative mt-2 mb-3">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <Search className="h-4 w-4 text-slate-400" />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Search sites..."
+                      className="w-full bg-slate-800/50 text-slate-300 pl-10 pr-4 py-2 rounded-md border-slate-700 border focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+                  
+                  {/* Pinned Sites Section */}
+                  {filteredDomains.some(domain => domain.pinned) && searchTerm.length === 0 && (
+                    <div className="mb-4">
+                      <h3 className="text-xs uppercase text-slate-500 font-semibold mb-2 flex items-center gap-1">
+                        <PinIcon className="h-3 w-3" /> Pinned Sites
+                      </h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {filteredDomains
+                          .filter(domain => domain.pinned)
+                          .map((domain) => (
+                            <a
+                              key={domain.name}
+                              href={domain.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-800/70 transition-colors border border-sky-900/30 group bg-sky-950/20"
+                            >
+                              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-sky-500/30 to-purple-500/30 border border-sky-700/50">
+                                {domain.name.charAt(0).toUpperCase()}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm text-sky-300 truncate flex items-center gap-1">
+                                  {domain.name}
+                                  <PinIcon className="h-3 w-3 text-sky-500/70" />
+                                </p>
+                                <p className="text-xs text-slate-400 truncate">{domain.url}</p>
+                              </div>
+                              <ExternalLinkIcon className="h-3 w-3 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </a>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* All Sites or Filtered Results */}
+                  <div className="overflow-y-auto flex-1 pr-2 -mr-2">
+                    {searchTerm.length > 0 && (
+                      <h3 className="text-xs uppercase text-slate-500 font-semibold mb-2">
+                        Search Results
+                      </h3>
+                    )}
+                    
+                    {!searchTerm.length && (
+                      <h3 className="text-xs uppercase text-slate-500 font-semibold mb-2">
+                        All Sites
+                      </h3>
+                    )}
+                    
+                    {filteredDomains.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {filteredDomains
+                          .filter(domain => !domain.pinned || searchTerm.length > 0)
+                          .map((domain) => (
+                            <a
+                              key={domain.name}
+                              href={domain.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-800/70 transition-colors border border-slate-800 group"
+                            >
+                              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-sky-500/20 to-purple-500/20 border border-slate-700">
+                                {domain.name.charAt(0).toUpperCase()}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm text-slate-300 truncate flex items-center gap-1">
+                                  {domain.name}
+                                  {domain.pinned && searchTerm.length > 0 && (
+                                    <PinIcon className="h-3 w-3 text-slate-500" />
+                                  )}
+                                </p>
+                                <p className="text-xs text-slate-500 truncate">{domain.url}</p>
+                              </div>
+                              <ExternalLinkIcon className="h-3 w-3 text-slate-500 group-hover:text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </a>
+                          ))}
+                      </div>
+                    ) : (
+                      <div className="py-8 text-center text-slate-500">
+                        <p>No matching sites found</p>
+                      </div>
+                    )}
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
           </CardFooter>
         </Card>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
-        }
-
-        @keyframes pulse-subtle {
-          0%,
-          100% {
-            opacity: 0.3;
-          }
-          50% {
-            opacity: 0.5;
-          }
-        }
-
-        @keyframes pulse-slow {
-          0%,
-          100% {
-            opacity: 0.2;
-          }
-          50% {
-            opacity: 0.4;
-          }
-        }
-
-        .animate-pulse-subtle {
-          animation: pulse-subtle 4s ease-in-out infinite;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 6s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 }

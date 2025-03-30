@@ -1,0 +1,24 @@
+{
+    "funFacts": [
+        "The 404 error code comes from room 404 at CERN where the World Wide Web was developed, which was the room where the site index was stored.",
+        "In the early days of the web, 404 errors were so common that the Error 404 page was often the most-viewed page on many websites.",
+        "Some websites have turned their 404 pages into games, like Google's T-Rex dinosaur game that appears when Chrome can't connect to the internet.",
+        "The HTTP 1.0 specification (from 1996) lists only 16 status codes, while the modern HTTP standard has over 60 different status codes.",
+        "A '418 I'm a Teapot' status code actually exists as an April Fools' joke from 1998, indicating that the server refuses to brew coffee because it's a teapot.",
+        "The first web server in the United States was set up at Stanford University in December 1990, less than a year after the web was invented.",
+        "Many people consider a well-designed 404 page as a mark of a company that cares about user experience.",
+        "The most common cause of 404 errors is moving or renaming pages without setting up proper redirects.",
+        "Unlike 404 (Not Found), a 410 status code means 'Gone' – the resource has been intentionally removed and won't be coming back.",
+        "The global internet handles approximately 22 billion HTTP requests per second, and a small percentage of those result in 404 errors.",
+        "The very first website, created by Tim Berners-Lee, is still online and can be visited at its original URL: http://info.cern.ch/.",
+        "The largest DDoS attack ever recorded peaked at 2.3 Tbps in 2020, targeting Amazon Web Services.",
+        "The first domain name ever registered was symbolics.com on March 15, 1985. It's still active today!",
+        "The term 'bug' in computing came from an actual insect - a moth was found trapped in Harvard's Mark II computer in 1947.",
+        "The Space Jam website from 1996 is still up and running, making it one of the oldest unchanged websites still active.",
+        "Error 404 'Not Found' is just one of many HTTP status codes - 200 means 'OK', 301 means 'Moved Permanently', and 500 means 'Internal Server Error'.",
+        "Some websites use HTTP status code 451 (a reference to Fahrenheit 451) to indicate that content has been removed for legal reasons.",
+        "The average website in 2023 is about 2MB in size, more than 100 times larger than websites from the late 1990s.",
+        "The first spam email was sent in 1978 to 393 ARPANET users by a Digital Equipment Corporation marketing representative.",
+        "About 94% of all websites use JavaScript, making it the most widely used client-side programming language on the web."
+    ]
+}
